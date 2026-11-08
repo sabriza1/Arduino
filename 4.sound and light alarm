@@ -3,36 +3,38 @@ const int buzzerPin = 8;
 const int armBtn = 10;
 const int sensorBtn = 11;
 const int potPin = A0;
-
 bool armed = false;
 
 void setup() {
   pinMode(ledPin, OUTPUT);
   pinMode(buzzerPin, OUTPUT);
   pinMode(armBtn, INPUT_PULLUP);
-  pinMode(sensorBtn,INPUT_PULLUP);
+  pinMode(sensorBtn, INPUT_PULLUP);
 }
-
 void loop() {
-  if (digitalRead(armBtn) ==LOW) {
+  
+  if (digitalRead(armBtn) == LOW) {
     armed = !armed;
+ 
+    digitalWrite(ledPin, HIGH);
+    delay(100);
+    digitalWrite(ledPin, LOW);
     delay(300);
   }
-  
   if (armed && digitalRead(sensorBtn) == LOW) {
-    int timeMs = map(analogRead(potPin),0,1023, 1000, 5000);
-    runAlarm (timeMs);
+    int timeMs = map(analogRead(potPin), 0, 1023, 1000, 5000);
+    runAlarm(timeMs);
+    delay(300);
   }
 }
-
 void runAlarm(int duration) {
-  unsigned long srart = millis();
-  while (millis() - srart < duration) {
-    digitalWrite(ledPin,HIGH);
-    digitalWrite(buzzerPin,HIGH);
+  unsigned long start = millis();
+  while (millis() - start < duration) {
+    digitalWrite(ledPin, HIGH);
+    digitalWrite(buzzerPin, HIGH);
     delay(200);
     digitalWrite(ledPin, LOW);
-    digitalWrite(buzzerPin,HIGH);
+    digitalWrite(buzzerPin, LOW);
     delay(200);
   }
 }
