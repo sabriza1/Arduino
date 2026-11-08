@@ -1,0 +1,29 @@
+bool state = false;
+bool lastButton = HIGH;
+
+void setup()
+{
+  pinMode(8, OUTPUT);
+  pinMode(12, INPUT_PULLUP);
+}
+
+void loop()
+{
+  if(digitalRead(12) == LOW && lastButton == HIGH)
+  {
+    state = !state;
+    delay(200);
+  }
+  lastButton = digitalRead(12);
+  if(state)
+  {
+    digitalWrite(8, HIGH);
+    delay(100);
+    digitalWrite(8, LOW);
+    delay(100);
+  }
+  else
+  {
+    digitalWrite(8, LOW);
+  }
+}
