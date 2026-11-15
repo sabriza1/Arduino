@@ -1,0 +1,30 @@
+const int ldrPin=A0;
+const int ledPin=9;
+const int buzzerPin=8;
+
+int lightValue=0;
+int threshold=400;
+
+void setup() {
+  pinMode(ledPin, OUTPUT);
+  pinMode(buzzerPin, OUTPUT);
+  Serial.begin(9600);
+}
+
+void loop() {
+  lightValue = analogRead(ldrPin);
+  Serial.println(lightValue);
+  if(lightValue<threshold) {
+    digitalWrite(ledPin,HIGH);
+     
+    tone(buzzerPin,1000);
+    delay(150);
+    
+    noTone(buzzerPin);
+    delay(850);
+  }else{
+    digitalWrite(ledPin, LOW);
+    noTone(buzzerPin);
+  }
+}
+  
